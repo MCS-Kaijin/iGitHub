@@ -1,2 +1,3 @@
 # iGitHub
-A Pythonista script to manage your GitHub account on-the-go
+
+A python script written for Pythonista so that you can access and manage your GitHub account from your mobile device.
