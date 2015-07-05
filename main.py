@@ -18,5 +18,5 @@ class iGitHub(ui.View):
         """There will be a way to change these in-app later...  """
         self["sb"].action=getrepo
 
-gui = ui.load_view()  # ("iPhone_main")
+gui = ui.load_view("iPhone_main")
 gui.present("fullscreen", hide_title_bar=True)
