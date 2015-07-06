@@ -33,6 +33,7 @@ def show_menu_bar(sender):
 
 
 # 'Get Repository' options screen
+gr_open=False
 lbl1 = ui.Label()
 lbl1.name='label1'
 lbl1.text='User: '
@@ -58,6 +59,12 @@ btn.frame = (6,52,75,20)
 btn.background_color='green'
 btn.tint_color='white'
 
+# 'GitHub' screen. I can't currently afford a paid account so I can't integrate GitHub for real, but here's the website
+gh_open=False
+wv = ui.WebView()
+wv.frame=(0,0,320,440)
+wv.name='webview1'
+
 
 class side_bar(ui.View):
 	def did_load(self):
@@ -78,16 +85,31 @@ def getrepo(sender):
 		zip_file.extractall()
 
 def sb_clicked(sender):
+	global gr_open, gh_open
 	button = sender.items[sender.selected_row]['title']
 	scroll = gui["scrollview1"]
 	show_menu_bar(gui["view1"]["mb"])
 	if(button == 'Get Repository'):
+		gr_open=True
 		scroll.add_subview(lbl1)
 		scroll.add_subview(usrt)
 		scroll.add_subview(lbl2)
 		scroll.add_subview(psdt)
 		scroll.add_subview(btn)
-		gui["scrollview1"]["getrepo"].action=getrepo
+		scroll["getrepo"].action=getrepo
+		if gh_open:
+			gh_open=False
+			scroll.remove_subview(scroll["webview1"])
+	elif(button == 'GitHub'):
+		gh_open=True
+		scroll.add_subview(wv)
+		wv.load_url('http://www.github.com')
+		if gr_open:
+			scroll.remove_subview(scroll["label1"])
+			scroll.remove_subview(scroll["usr"])
+			scroll.remove_subview(scroll["label2"])
+			scroll.remove_subview(scroll["rep"])
+			scroll.remove_subview(scroll["getrepo"])
 
 gui["view2"]["sb"].delegate.action=sb_clicked
 
